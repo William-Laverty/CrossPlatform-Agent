@@ -1,0 +1,5 @@
+/Users/williamlaverty/Downloads/Collector
+/Users/williamlaverty/Downloads/Collector.dll
+/Users/williamlaverty/Downloads/Collector.deps.json
+/Users/williamlaverty/Downloads/Collector.runtimeconfig.json
+/Users/williamlaverty/Downloads/Collector.pdb

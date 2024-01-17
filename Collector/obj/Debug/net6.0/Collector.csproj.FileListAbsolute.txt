@@ -1,0 +1,15 @@
+/Users/williamlaverty/Projects/Agent/Collector/bin/Debug/net6.0/Collector
+/Users/williamlaverty/Projects/Agent/Collector/bin/Debug/net6.0/Collector.deps.json
+/Users/williamlaverty/Projects/Agent/Collector/bin/Debug/net6.0/Collector.runtimeconfig.json
+/Users/williamlaverty/Projects/Agent/Collector/bin/Debug/net6.0/Collector.dll
+/Users/williamlaverty/Projects/Agent/Collector/bin/Debug/net6.0/Collector.pdb
+/Users/williamlaverty/Projects/Agent/Collector/obj/Debug/net6.0/Collector.GeneratedMSBuildEditorConfig.editorconfig
+/Users/williamlaverty/Projects/Agent/Collector/obj/Debug/net6.0/Collector.AssemblyInfoInputs.cache
+/Users/williamlaverty/Projects/Agent/Collector/obj/Debug/net6.0/Collector.AssemblyInfo.cs
+/Users/williamlaverty/Projects/Agent/Collector/obj/Debug/net6.0/Collector.csproj.CoreCompileInputs.cache
+/Users/williamlaverty/Projects/Agent/Collector/obj/Debug/net6.0/Collector.dll
+/Users/williamlaverty/Projects/Agent/Collector/obj/Debug/net6.0/refint/Collector.dll
+/Users/williamlaverty/Projects/Agent/Collector/obj/Debug/net6.0/Collector.pdb
+/Users/williamlaverty/Projects/Agent/Collector/obj/Debug/net6.0/Collector.genruntimeconfig.cache
+/Users/williamlaverty/Projects/Agent/Collector/obj/Debug/net6.0/ref/Collector.dll
+/Users/williamlaverty/Projects/Agent/Collector/obj/Debug/net6.0/Collector.csproj.AssemblyReference.cache

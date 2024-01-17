@@ -1,0 +1,5 @@
+/Users/williamlaverty/Projects/Agent/Collector/bin/Release/net6.0/publish/Collector
+/Users/williamlaverty/Projects/Agent/Collector/bin/Release/net6.0/publish/Collector.dll
+/Users/williamlaverty/Projects/Agent/Collector/bin/Release/net6.0/publish/Collector.deps.json
+/Users/williamlaverty/Projects/Agent/Collector/bin/Release/net6.0/publish/Collector.runtimeconfig.json
+/Users/williamlaverty/Projects/Agent/Collector/bin/Release/net6.0/publish/Collector.pdb
