@@ -9,8 +9,23 @@
 
   <ItemGroup>
     <None Remove="Pipes\" />
+    <None Remove="Scripts\" />
+    <None Remove="Lua\" />
+    <None Remove="Scripts\os_info_fetch.lua" />
+    <None Remove="Logs\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pipes\" />
+    <Folder Include="Scripts\" />
+    <Folder Include="Lua\" />
+    <Folder Include="Logs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NLua" Version="1.6.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\os_info_fetch.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

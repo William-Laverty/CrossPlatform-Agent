@@ -2,14 +2,24 @@
 using System.IO.Pipes;
 using System.Threading;
 using System.Diagnostics;
+using Director.Logs;
 
 namespace Director.Pipes
 {
+    /// <summary>
+    /// Represents a named pipe client for communication with the Collector.
+    /// </summary>
     public class NamedPipeClient
     {
+        /// <summary>
+        /// Runs the named pipe client to communicate with the Collector.
+        /// </summary>
         public static void RunClient()
         {
+            // Specify the name of the named pipe
             string pipeName = "AgentPipe";
+
+            // Variable to store received data
             string data = "";
 
             while (true)
@@ -23,25 +33,27 @@ namespace Director.Pipes
 
                         if (pipeClient.IsConnected)
                         {
-                            Console.WriteLine("DIRECTOR: Connected to Collector.");
+                            Logger.Log("DIRECTOR: Connected to Collector.");
 
                             // Read the data from the named pipe
-                            data = PipeReader.ReadDataFromPipe(pipeClient);      
+                            data = PipeReader.ReadDataFromPipe(pipeClient);
 
-                            Console.WriteLine("DIRECTOR: Received data from Collector:");
-                            Console.WriteLine(data);
+                            Logger.Log("DIRECTOR: Received data from Collector:");
+                            Logger.Log(data);
                         }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"DIRECTOR: Error connecting to Collector: {ex.Message}");
+                        Logger.Log($"DIRECTOR: Error connecting to Collector: {ex.Message}");
 
-                        string dataChangeString = UpdateCheck.ExtractHasDataUpdated(data);
-                        bool dataChanged = bool.Parse(dataChangeString);
+                        // Perform update check with the received data
+                        UpdateCheck.ExtractHasDataUpdated(data);
 
-                        if (!pipeClient.IsConnected && dataChanged)
+                        if (!pipeClient.IsConnected)
                         {
-                            Console.WriteLine("DIRECTOR: Executing collector");
+                            Logger.Log("DIRECTOR: Executing collector");
+
+                            // Start the Collector process
                             Process process = new Process();
                             process.StartInfo.FileName = "./Collector";
                             process.StartInfo.Arguments = "-n";

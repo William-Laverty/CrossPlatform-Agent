@@ -12,8 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Pipes\" />
+    <None Remove="Logs\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pipes\" />
+    <Folder Include="Logs\" />
   </ItemGroup>
 </Project>

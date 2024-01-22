@@ -6,7 +6,9 @@
     <authors>Collector</authors>
     <description>Package Description</description>
     <dependencies>
-      <group targetFramework="net6.0" />
+      <group targetFramework="net6.0">
+        <dependency id="NLua" version="1.6.3" exclude="Build,Analyzers" />
+      </group>
     </dependencies>
   </metadata>
   <files>
