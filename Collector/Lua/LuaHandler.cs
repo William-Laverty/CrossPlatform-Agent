@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using Collector; // Add this line to include the Logger namespace
 using Collector.Logs;
+using System.Runtime.InteropServices;
 
 /// <summary>
 /// Represents a handler for executing Lua scripts.
@@ -15,10 +16,18 @@ public class LuaHandler
     public LuaHandler()
     {
         // Get the directory of the current assembly
-        string currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        string currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "Unknown Path: Executing Assembly";
+        string luaScriptPath = "";
 
         // Combine the current directory with the path to the Lua script
-        string luaScriptPath = Path.Combine(currentDirectory, "Scripts/os_info_fetch.lua");
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
+            luaScriptPath = Path.Combine(currentDirectory, @"Scripts/os_info_fetch.lua");
+        }
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            luaScriptPath = Path.Combine(currentDirectory, @"Scripts\os_info_fetch.lua");
+        }
 
         // Log the information about Lua script execution
         Logger.Log($"Executing Lua script: {luaScriptPath}");
@@ -29,7 +38,7 @@ public class LuaHandler
             try
             {
                 // Set the current working directory to the directory of the Lua script
-                Directory.SetCurrentDirectory(Path.GetDirectoryName(luaScriptPath));
+                Directory.SetCurrentDirectory(Path.GetDirectoryName(luaScriptPath) ?? "Unknown Path: Script Directory");
 
                 // Execute the Lua script
                 lua.DoFile(luaScriptPath);
@@ -43,14 +52,5 @@ public class LuaHandler
                 Logger.Log($"Error executing Lua script: {ex.Message}");
             }
         }
-    }
-
-    /// <summary>
-    /// Gets the OS information retrieved by the Lua script.
-    /// </summary>
-    /// <returns>null</returns>
-    public string GetOSInfo()
-    {
-        return null;
     }
 }

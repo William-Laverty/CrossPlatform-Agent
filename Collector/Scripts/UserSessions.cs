@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using Collector.Logs;
 
 namespace Collector.Scripts
 {
@@ -36,49 +38,91 @@ namespace Collector.Scripts
 
         private static string ExecuteCommand(string command)
         {
-            var processStartInfo = new ProcessStartInfo
+            string output = "";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                FileName = "/bin/bash",
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            using (var process = new Process { StartInfo = processStartInfo })
-            {
-                process.Start();
-
-                using (var sw = process.StandardInput)
+                var processStartInfo = new ProcessStartInfo
                 {
-                    if (sw.BaseStream.CanWrite)
+                    FileName = "/bin/bash",
+                    RedirectStandardInput = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (var process = new Process { StartInfo = processStartInfo })
+                {
+                    process.Start();
+
+                    using (var sw = process.StandardInput)
                     {
-                        sw.WriteLine(command);
+                        if (sw.BaseStream.CanWrite)
+                        {
+                            sw.WriteLine(command);
+                        }
+                    }
+
+                    output = process.StandardOutput.ReadToEnd();
+                    process.WaitForExit();
+
+                    
+                }
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                var proccessStartInfo = new ProcessStartInfo
+                {
+                    FileName = "cmd.exe",
+                    Arguments = $"/c {command}",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (var process = new Process {  StartInfo = proccessStartInfo })
+                {
+                    process.Start();
+
+                    output = process.StandardOutput.ReadToEnd();
+                    string error = process.StandardError.ReadToEnd();
+
+                    process.WaitForExit();
+
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        throw new Exception($"Command execution error: {error}");
                     }
                 }
-
-                string output = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-
-                return output;
             }
+            return output;
         }
 
         private static string ExtractFormattedUserSessions(string input)
         {
-            string pattern = @"(\S+)\s+\S+\s+(\S+)\s+(\S+)\s+\S+\s+.*";
-            MatchCollection matches = Regex.Matches(input, pattern, RegexOptions.Multiline);
-
-            string formattedOutput = "User Session Information:\n";
-
-            foreach (Match match in matches)
+            string formattedOutput = "";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                string username = match.Groups[1].Value;
-                string lastAction = match.Groups[2].Value.ToLower() == "still" ? "Login" : "Logout";
-                string timestamp = match.Groups[3].Value;
+                string pattern = @"(\S+)\s+\S+\s+(\S+)\s+(\S+)\s+\S+\s+.*";
+                MatchCollection matches = Regex.Matches(input, pattern, RegexOptions.Multiline);
 
-                formattedOutput += $"USERNAME: {username}, LAST_ACTION: {lastAction}, TIMESTAMP: {timestamp}\n";
+                formattedOutput = "User Session Information:\n";
+
+                foreach (Match match in matches)
+                {
+                    string username = match.Groups[1].Value;
+                    string lastAction = match.Groups[2].Value.ToLower() == "still" ? "Login" : "Logout";
+                    string timestamp = match.Groups[3].Value;
+
+                    formattedOutput += $"USERNAME: {username}, LAST_ACTION: {lastAction}, TIMESTAMP: {timestamp}\n";
+                }
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                formattedOutput = "User Session Information:\n";
+
+                formattedOutput += $"{input}";
             }
 
             return formattedOutput;

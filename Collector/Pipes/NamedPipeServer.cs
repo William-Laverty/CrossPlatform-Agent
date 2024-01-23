@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.Pipes;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using Collector.Logs;
@@ -48,12 +49,19 @@ namespace Collector.Pipes
                 // Create a StreamString to simplify reading and writing strings to the pipe
                 StreamString ss = new StreamString(pipeServer);
 
-                // Execute the 'w' command to get user sessions information
-                string userSessionsOutput = UserSessions.Execute("w");
-                ss.WriteString(userSessionsOutput);
-
-                // Get and send OS information using Lua scripting
-                luaHandler.GetOSInfo();
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    // Execute the 'w' command to get user sessions information || MACOS OR LINUX
+                    string userSessionsOutput = UserSessions.Execute("w");
+                    ss.WriteString(userSessionsOutput);
+                    Logger.Log($"OPERATING SYSTEM: MacOSX");
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    // Execute the 'query session' command to get user sessions information || WINDOWS
+                    string userSessionsOutput = UserSessions.Execute("query session");
+                    ss.WriteString(userSessionsOutput);
+                } 
 
                 // Send the flag indicating whether data has been updated
                 string dataUpdate = dataHasUpdated.ToString();

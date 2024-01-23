@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "eLugokif3xGL+w1cAyuXipEZQPwVbMSN004TH5fCNGX7n4umCaL6bD9qbqn9+59pSaXhdevtRlGJpEj96sWz/g==",
+  "dgSpecHash": "+JgO6yXFE7VUxBn8xUWPKZaItnvhYa9EFOk/2Mtg6kJ2+QmzZAMXjwUrBJZR+gzRm5K9shYko6S1lZnSkbGaxA==",
   "success": true,
   "projectFilePath": "/Users/williamlaverty/Projects/Agent/Collector/Collector.csproj",
   "expectedPackageFiles": [
     "/Users/williamlaverty/.nuget/packages/keralua/1.3.4/keralua.1.3.4.nupkg.sha512",
-    "/Users/williamlaverty/.nuget/packages/nlua/1.6.3/nlua.1.6.3.nupkg.sha512"
+    "/Users/williamlaverty/.nuget/packages/nlua/1.6.3/nlua.1.6.3.nupkg.sha512",
+    "/Users/williamlaverty/.nuget/packages/microsoft.netcore.app.ref/6.0.25/microsoft.netcore.app.ref.6.0.25.nupkg.sha512",
+    "/Users/williamlaverty/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.25/microsoft.aspnetcore.app.ref.6.0.25.nupkg.sha512",
+    "/Users/williamlaverty/.nuget/packages/microsoft.netcore.app.host.osx-arm64/6.0.25/microsoft.netcore.app.host.osx-arm64.6.0.25.nupkg.sha512"
   ],
   "logs": []
 }

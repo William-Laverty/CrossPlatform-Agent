@@ -26,6 +26,7 @@ namespace Collector.Logs
                     {
                         string logEntry = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - {message}";
                         writer.WriteLine(logEntry);
+                        Console.WriteLine(logEntry);
                     }
                 }
                 catch (Exception ex)
@@ -38,7 +39,7 @@ namespace Collector.Logs
         private static string GetLogFilePath()
         {
             // Get the directory of the current assembly
-            string currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "Unknown Path: Executing Assembly";
 
             // Combine the current directory with the log file path
             return Path.Combine(currentDirectory, "CollectorLog.txt");
